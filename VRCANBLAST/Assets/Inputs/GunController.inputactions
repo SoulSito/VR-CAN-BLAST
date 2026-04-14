@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "GunController",
+    "maps": [
+        {
+            "name": "GunController",
+            "id": "dbd0861f-60c4-4670-ba76-d11dd13b938c",
+            "actions": [
+                {
+                    "name": "Shoot",
+                    "type": "Value",
+                    "id": "ee24e5d7-21b2-4985-8be0-5b556f71fd21",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "Press(pressPoint=0.8)",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d4f4ad78-8a39-4fd7-96b1-c59e1e9cf6de",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
