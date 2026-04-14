@@ -1,11 +1,13 @@
 using UnityEngine;
 
+
+
 public class Controller_PilesOfCans : MonoBehaviour
 {
     [SerializeField] GameObject canPrefab;
     [SerializeField] float canWidth = 1f;
     [SerializeField] float canHeight = 1f;
-    [SerializeField] float canDistance = 1.5f;
+    [SerializeField] float canDistance = 1f;
     [SerializeField] int numberOfCans = 3;
 
     Vector3[] cansPositions;
@@ -26,14 +28,14 @@ public class Controller_PilesOfCans : MonoBehaviour
 
         while (numberOfCansRemaining > 0)
         {
-            float positionX = IsEvenRow(row) ? -(canWidth * canDistance) * row / 2 : 0;
+            float positionX = -(canWidth + canWidth / 2) * (row / 2) + (IsEvenRow(row) ? canWidth * 0.5f : 0);
             float positionY = (row - 1) * canHeight + canHeight / 2;
 
             for (int i = 0; i < row; i++)
             {
                 if (numberOfCansRemaining <= 0) return;
 
-                cansPositions[numberOfCansRemaining - 1] = new Vector3(positionX + (i * (canWidth * canDistance)), positionY, transform.position.z);
+                cansPositions[numberOfCansRemaining - 1] = new Vector3(positionX + (i * (canWidth) - canWidth / 2), positionY, transform.position.z);
 
                 numberOfCansRemaining--;
             }
