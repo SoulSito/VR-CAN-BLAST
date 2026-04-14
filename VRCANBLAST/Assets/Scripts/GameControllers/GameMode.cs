@@ -30,7 +30,6 @@ public class GameMode : MonoBehaviour
 
     private void SetupGame()
     {
-        if (pileOfCans != null) pileOfCans.Setup();
 
         isGameReady = GameState.ReadyToPlay;
     }
@@ -42,7 +41,7 @@ public class GameMode : MonoBehaviour
 
     public void RestartGame()
     {
-        pileOfCans.Reset();
+
     }
 
     public void OnPlayerRanOutOfBullets(GameObject player)
