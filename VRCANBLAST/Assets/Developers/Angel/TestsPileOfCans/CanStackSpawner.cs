@@ -9,22 +9,23 @@ public class CanStackSpawner : MonoBehaviour
     {
         Clear();
 
-        float offsetX = 0f;
+        int numberOfStacks = level.stacks.Count;
+        float offsetX = -(numberOfStacks % 2 == 0 ? (spacing / 2) : spacing) * numberOfStacks / 2;
 
         foreach (var stack in level.stacks)
         {
-            SpawnStack(stack.cansAmount, new Vector3(offsetX, 0, 0));
+            SpawnStack(stack.cansAmount, new Vector3(offsetX, 0, 0) + transform.position);
             offsetX += spacing; 
         }
     }
 
     void SpawnStack(int count, Vector3 origin)
     {
-        CapsuleCollider col = canPrefab.GetComponent<CapsuleCollider>();
+        BoxCollider col = canPrefab.GetComponent<BoxCollider>();
 
-        float spacingMultiplier = 1.2f;
-        float width = col.radius * 2 * spacingMultiplier;
-        float height = col.height;
+        float spacingMultiplier = 1.5f;
+        float width = col.size.x * spacingMultiplier;
+        float height = col.size.y;
         
         if (count == 2)
         {
