@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1513188283547807157}
   - component: {fileID: 3499742396616313430}
   - component: {fileID: 6662264647750491373}
+  - component: {fileID: 1161716696442634262}
   m_Layer: 0
-  m_Name: Can 1
+  m_Name: Can
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,6 +83,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 0.85, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1161716696442634262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293758712336058234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6b07caf2045fe4580216b59eb4c559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CanMaterialHandler
+  m_Renderer: {fileID: 8538157360195780075}
+  materialList:
+  - {fileID: 8261315333632255771, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
+  - {fileID: 8261315333632255771, guid: 91b10b241dbce2e40b78798df930f87b, type: 3}
+  - {fileID: 8261315333632255771, guid: 306f115b39974ed499e31c67e00a8783, type: 3}
+  - {fileID: 8261315333632255771, guid: af78a0f6e71de2a43bed1ef0e20de1eb, type: 3}
 --- !u!1001 &8019365510353370675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -154,5 +173,10 @@ PrefabInstance:
 --- !u!4 &7548097898301151704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
+  m_PrefabInstance: {fileID: 8019365510353370675}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8538157360195780075 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1816958979532293080, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
   m_PrefabInstance: {fileID: 8019365510353370675}
   m_PrefabAsset: {fileID: 0}
