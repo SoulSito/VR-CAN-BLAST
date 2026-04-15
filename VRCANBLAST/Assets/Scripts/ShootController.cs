@@ -18,6 +18,8 @@ public class ShootController : MonoBehaviour
     public Transform puntoRecarga;
     public GameObject cargadorReal;
     public GameObject cargadorSimulado;
+    [SerializeField] private int bullets = 3;
+    private int maxBullets = 3;
 
     public float recorridoMaxY = 0.03f;
     public float suavizado = 15f;
@@ -27,7 +29,7 @@ public class ShootController : MonoBehaviour
 
     private bool enMovimiento = false;
     private bool hasFired = false;
-    private bool haRecargado = false;
+    public bool haRecargado = true;
 
     private void Start()
     {
@@ -40,6 +42,11 @@ public class ShootController : MonoBehaviour
         {
             botonPosInicial = boton.localPosition;
         }
+        Setup(new GunSettings());
+    }
+    public void Setup(GunSettings gunSettings)
+    {
+
     }
 
     private void OnEnable()
@@ -61,7 +68,6 @@ public class ShootController : MonoBehaviour
         float triggerValue = triggerAction.action.ReadValue<float>();
         float gripValue = gripAction.action.ReadValue<float>();
 
-        Debug.Log(gripValue);
 
         if (triggerValue > 0.8f && !hasFired)
         {
@@ -74,14 +80,9 @@ public class ShootController : MonoBehaviour
             hasFired = false;
         }
 
-        if (gripValue >= 0.9f && !haRecargado)
+        if (gripValue >= 0.9f && haRecargado)
         {
-            Recargar();
-            haRecargado = true;
-        }
-
-        if (gripValue < 0.2f)
-        {
+            Descargar();
             haRecargado = false;
         }
 
@@ -101,6 +102,15 @@ public class ShootController : MonoBehaviour
 
     public void Disparar()
     {
+        if (bullets > 0)
+        {
+            bullets--;
+            Debug.Log("Has disparado");
+        }
+        else
+        {
+            Debug.Log("No tienes balas");
+        }
         if (!enMovimiento && tambor != null)
         {
             StartCoroutine(MoverTambor());
@@ -136,7 +146,7 @@ public class ShootController : MonoBehaviour
         enMovimiento = false;
     }
 
-    void Recargar()
+    void Descargar()
     {
         if (puntoRecarga == null || cargadorSimulado == null) return;
 
@@ -147,6 +157,7 @@ public class ShootController : MonoBehaviour
         );
 
         nuevoCargador.transform.SetParent(null);
+        bullets = 0;
 
         if (cargadorReal != null)
         {
@@ -164,4 +175,13 @@ public class ShootController : MonoBehaviour
             rb.AddForce(direccion * fuerza, ForceMode.Impulse);
         }
     }
+    public void Recargar()
+    {
+        if (puntoRecarga == null || cargadorReal == null || haRecargado) return;
+
+        cargadorReal.SetActive(true);
+        haRecargado = true;
+        bullets = maxBullets;
+    }
+
 }
