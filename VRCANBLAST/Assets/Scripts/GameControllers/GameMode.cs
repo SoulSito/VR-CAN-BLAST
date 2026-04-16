@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState {
@@ -7,13 +10,38 @@ public enum GameState {
     Finished
 }
 
+public class EndLevelResult
+{
+    public int remainingCans;
+    public int knockedCansInTable;
+
+    public EndLevelResult(int remainingCans, int knockedCansInTable)
+    {
+        this.remainingCans = remainingCans;
+        this.knockedCansInTable = knockedCansInTable;
+    }
+}
+
 public class GameMode : MonoBehaviour
 {
     public static GameMode Instance { get; private set; }
 
+    [Header("Setup")]
+    [SerializeField] List<LevelData> levels;
+
+    [Header("References")]
     [SerializeField] PileOfCans pileOfCans;
+    [SerializeField] UFO ufo;
+    [SerializeField] ShootController pistol;
+
+    [Header("UI")]
+    [SerializeField] ScoreUI scoreUI;
+    [SerializeField] SettingsUI settingsUI;
+
 
     public GameState isGameReady {get; private set;}
+
+    int currentLevel = 0;
 
     private void Awake()
     {
@@ -30,22 +58,42 @@ public class GameMode : MonoBehaviour
 
     private void SetupGame()
     {
+        levels.Shuffle();
 
         isGameReady = GameState.ReadyToPlay;
     }
 
-    public void StartGame()
+    internal void StartGame()
     {
+        pistol.Setup(settingsUI.GetGunSettings());
+        pileOfCans.PlaceLevel(levels[currentLevel]);
+        ufo.Activate();
 
+        currentLevel++;
+
+        // TODO: Se levanta el toldo?
     }
 
-    public void RestartGame()
+    internal void PlaceNextPile()
     {
+        EndLevelResult result = pileOfCans.EndLevel();
+        pileOfCans.PlaceLevel(levels[currentLevel]);
 
+        currentLevel++;
     }
 
-    public void OnPlayerRanOutOfBullets(GameObject player)
+    internal void OnCanWasPickedUp(GameObject can)
     {
+        Can canScript = can.GetComponent<Can>();
 
+        canScript.Disable();
+        pileOfCans.AddCanToInactiveList(can);
+    }
+
+    internal void OnCanTouchedFloor(GameObject can)
+    {
+        scoreUI.IncreaseScore(100);
+
+        ufo.AddCanToPickUpList(can);
     }
 }
