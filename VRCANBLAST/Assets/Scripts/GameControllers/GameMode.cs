@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState {
@@ -7,20 +10,46 @@ public enum GameState {
     Finished
 }
 
+public class EndLevelResult
+{
+    public int untouchedCans;
+    public int knockedCansInTable;
+
+    public EndLevelResult(int untouchedCans, int knockedCansInTable)
+    {
+        this.untouchedCans = untouchedCans;
+        this.knockedCansInTable = knockedCansInTable;
+    }
+}
+
 public class GameMode : MonoBehaviour
 {
     public static GameMode Instance { get; private set; }
 
-    [SerializeField] PileOfCans pileOfCans;
+    [Header("Setup")]
+    [SerializeField] List<LevelData> levels;
+    [SerializeField] int timePerGame = 60;
 
-    public GameState isGameReady {get; private set;}
+    [Header("References")]
+    [SerializeField] PileOfCans pileOfCans;
+    [SerializeField] UFO ufo;
+    [SerializeField] ShootController pistol;
+
+    [Header("UI")]
+    [SerializeField] ScoreUI scoreUI;
+    [SerializeField] SettingsUI settingsUI;
+
+
+    public GameState gameState {get; private set;}
+
+    int currentLevel = 0;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
 
-        isGameReady = GameState.Setup;
+        gameState = GameState.Setup;
     }
 
     private void Start()
@@ -30,23 +59,74 @@ public class GameMode : MonoBehaviour
 
     private void SetupGame()
     {
-        if (pileOfCans != null) pileOfCans.Setup();
+        levels.Shuffle();
 
-        isGameReady = GameState.ReadyToPlay;
+        gameState = GameState.ReadyToPlay;
     }
 
-    public void StartGame()
+    internal void StartGame()
     {
+        pistol?.Setup(settingsUI.GetGunSettings());
+        pileOfCans.PlaceLevel(levels[currentLevel]);
+        ufo.Activate();
 
+        currentLevel++;
+
+        gameState = GameState.Playing;
+        scoreUI.StartTimer(timePerGame);
+
+        // TODO: Se levanta el toldo?
     }
 
-    public void RestartGame()
+    internal void PlaceNextPile()
     {
-        pileOfCans.Reset();
+        if(currentLevel > levels.Count - 1)
+        {
+            currentLevel = 0;
+            levels.Shuffle();
+        }
+
+        EndLevelResult result = pileOfCans.EndLevel();
+        pileOfCans.PlaceLevel(levels[currentLevel]);
+
+        currentLevel++;
     }
 
-    public void OnPlayerRanOutOfBullets(GameObject player)
+    internal void OnCanWasPickedUp(GameObject can)
     {
+        Can canScript = can.GetComponent<Can>();
 
+        canScript.Disable();
+        pileOfCans.AddCanToInactiveList(can);
+    }
+
+    internal void OnCanTouchedFloor(GameObject can)
+    {
+        scoreUI.IncreaseScore(100);
+
+        ufo.AddCanToPickUpList(can);
+    }
+
+    internal void TimeEnded()
+    {
+        gameState = GameState.Finished;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            StartGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            OnCanTouchedFloor(null);
+        }
+
+        if (Input.GetKey(KeyCode.F3))
+        {
+            PlaceNextPile();
+        }
     }
 }
