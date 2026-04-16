@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9093475255902567393}
   - component: {fileID: 2874710061407181031}
   - component: {fileID: 13132813355447470}
+  - component: {fileID: 7980556617889193476}
   m_Layer: 0
   m_Name: CargadorSimulado
   m_TagString: Untagged
@@ -29,9 +30,9 @@ Transform:
   m_GameObject: {fileID: 2751247876885951832}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.021414924, z: 0.022446798}
+  m_LocalPosition: {x: 0, y: 0.007092092, z: 0.017290795}
   m_LocalScale: {x: -10, y: -10, z: -10}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -68,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4874126678125670354, guid: 55d1ca74677a2674982be7200747fb3e, type: 3}
+  - {fileID: 2100000, guid: 4244d3537d2691c479ca6510ff84e555, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -140,3 +141,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.004, y: 0.007584847, z: 0.0012328963}
   m_Center: {x: 0.0043691755, y: -0.0022471645, z: -0.0000000010060361}
+--- !u!114 &7980556617889193476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751247876885951832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e271cc621077b04c84d0e25360903ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DestroyAfterTime
+  time: 2

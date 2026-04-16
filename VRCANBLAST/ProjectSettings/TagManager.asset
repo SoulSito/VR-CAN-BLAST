@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Anchor
   - Recarga
-  - Can
+  - GunController
   layers:
   - Default
   - TransparentFX
