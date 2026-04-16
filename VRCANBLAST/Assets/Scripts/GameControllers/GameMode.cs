@@ -12,12 +12,12 @@ public enum GameState {
 
 public class EndLevelResult
 {
-    public int remainingCans;
+    public int untouchedCans;
     public int knockedCansInTable;
 
-    public EndLevelResult(int remainingCans, int knockedCansInTable)
+    public EndLevelResult(int untouchedCans, int knockedCansInTable)
     {
-        this.remainingCans = remainingCans;
+        this.untouchedCans = untouchedCans;
         this.knockedCansInTable = knockedCansInTable;
     }
 }
@@ -28,6 +28,7 @@ public class GameMode : MonoBehaviour
 
     [Header("Setup")]
     [SerializeField] List<LevelData> levels;
+    [SerializeField] int timePerGame = 60;
 
     [Header("References")]
     [SerializeField] PileOfCans pileOfCans;
@@ -39,7 +40,7 @@ public class GameMode : MonoBehaviour
     [SerializeField] SettingsUI settingsUI;
 
 
-    public GameState isGameReady {get; private set;}
+    public GameState gameState {get; private set;}
 
     int currentLevel = 0;
 
@@ -48,7 +49,7 @@ public class GameMode : MonoBehaviour
         if (Instance == null) Instance = this;
         else Destroy(this.gameObject);
 
-        isGameReady = GameState.Setup;
+        gameState = GameState.Setup;
     }
 
     private void Start()
@@ -60,22 +61,31 @@ public class GameMode : MonoBehaviour
     {
         levels.Shuffle();
 
-        isGameReady = GameState.ReadyToPlay;
+        gameState = GameState.ReadyToPlay;
     }
 
     internal void StartGame()
     {
-        pistol.Setup(settingsUI.GetGunSettings());
+        pistol?.Setup(settingsUI.GetGunSettings());
         pileOfCans.PlaceLevel(levels[currentLevel]);
         ufo.Activate();
 
         currentLevel++;
+
+        gameState = GameState.Playing;
+        scoreUI.StartTimer(timePerGame);
 
         // TODO: Se levanta el toldo?
     }
 
     internal void PlaceNextPile()
     {
+        if(currentLevel > levels.Count - 1)
+        {
+            currentLevel = 0;
+            levels.Shuffle();
+        }
+
         EndLevelResult result = pileOfCans.EndLevel();
         pileOfCans.PlaceLevel(levels[currentLevel]);
 
@@ -95,5 +105,28 @@ public class GameMode : MonoBehaviour
         scoreUI.IncreaseScore(100);
 
         ufo.AddCanToPickUpList(can);
+    }
+
+    internal void TimeEnded()
+    {
+        gameState = GameState.Finished;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            StartGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            OnCanTouchedFloor(null);
+        }
+
+        if (Input.GetKey(KeyCode.F3))
+        {
+            PlaceNextPile();
+        }
     }
 }
