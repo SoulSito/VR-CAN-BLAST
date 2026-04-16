@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Anchor
   - Recarga
+  - Can
   layers:
   - Default
   - TransparentFX
