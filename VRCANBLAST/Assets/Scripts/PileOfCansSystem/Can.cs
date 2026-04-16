@@ -19,9 +19,12 @@ public class Can : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Floor"))
         {
-            hasTouchedFloor = true;
+            if (!hasTouchedFloor)
+            {
+                hasTouchedFloor = true;
 
-            GameMode.Instance.OnCanTouchedFloor(gameObject);
+                GameMode.Instance.OnCanTouchedFloor(gameObject);
+            }
         }
     }
 }

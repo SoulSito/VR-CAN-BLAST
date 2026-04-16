@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3499742396616313430}
   - component: {fileID: 6662264647750491373}
   - component: {fileID: 1161716696442634262}
+  - component: {fileID: -2460707078987242248}
   m_Layer: 0
   m_Name: Can
   m_TagString: Can
@@ -81,7 +82,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.85, z: 0.5}
+  m_Size: {x: 0.25, y: 0.4, z: 0.25}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1161716696442634262
 MonoBehaviour:
@@ -101,6 +102,18 @@ MonoBehaviour:
   - {fileID: 8261315333632255771, guid: 91b10b241dbce2e40b78798df930f87b, type: 3}
   - {fileID: 8261315333632255771, guid: 306f115b39974ed499e31c67e00a8783, type: 3}
   - {fileID: 8261315333632255771, guid: af78a0f6e71de2a43bed1ef0e20de1eb, type: 3}
+--- !u!114 &-2460707078987242248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8293758712336058234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecade47a5f052754ea4e9e94b6b1ce51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8019365510353370675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,15 +124,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cefb2fa8403629645a53cf214c28b3e9, type: 3}
       propertyPath: m_LocalPosition.x
