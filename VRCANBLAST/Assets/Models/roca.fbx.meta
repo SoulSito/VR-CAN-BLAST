@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 306f115b39974ed499e31c67e00a8783
+guid: 21a3a4b8067336542888ba5a19ef70ec
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: mango
-    second: {fileID: 2800000, guid: eb23225c850903146a27e7c37253144f, type: 3}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -96,7 +91,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.1
+    globalScale: 0.001
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
