@@ -73,7 +73,7 @@ public class GameMode : MonoBehaviour
         currentLevel++;
 
         gameState = GameState.Playing;
-        scoreUI.StartTimer(timePerGame);
+        //scoreUI.StartTimer(timePerGame);
 
         // TODO: Se levanta el toldo?
     }
