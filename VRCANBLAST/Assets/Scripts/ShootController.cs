@@ -8,18 +8,26 @@ public class ShootController : MonoBehaviour
     [SerializeField] private InputActionReference triggerAction;
     [SerializeField] private InputActionReference gripAction;
 
-    [Header("Animación Disparar")]
+    [Header("Disparar")]
     public Transform tambor;
     public float distancia = 0.22f;
     public float velocidad = 0.33f;
+    [SerializeField] private GameObject firePoint;
+    private Transform transformFirePoint;
+    private AudioSource sfxSource;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private float bulletSpeed = 20f;
 
     [Header("Recargar")]
     public Transform boton;
     public Transform puntoRecarga;
     public GameObject cargadorReal;
     public GameObject cargadorSimulado;
-    [SerializeField] private int bullets = 3;
-    private int maxBullets = 3;
+
+    [Header("Configuracion")]
+    [SerializeField] private GameObject miraLaser;
+    [SerializeField] private int bullets;
+    [SerializeField] private int maxBullets;
 
     public float recorridoMaxY = 0.03f;
     public float suavizado = 15f;
@@ -30,9 +38,16 @@ public class ShootController : MonoBehaviour
     private bool enMovimiento = false;
     private bool hasFired = false;
     public bool haRecargado = true;
+    bool sinBalas = false;
+    bool recarga = false;
 
     private void Start()
     {
+        if (firePoint != null) 
+        {
+            transformFirePoint = firePoint.GetComponent<Transform>();
+            sfxSource = firePoint.GetComponent<AudioSource>();
+        }
         if (tambor != null)
         {
             posicionInicialLocal = tambor.localPosition;
@@ -43,10 +58,20 @@ public class ShootController : MonoBehaviour
             botonPosInicial = boton.localPosition;
         }
         Setup(new GunSettings());
+        bullets = maxBullets;
     }
     public void Setup(GunSettings gunSettings)
     {
+        maxBullets = gunSettings.maxBullets;
 
+        if (gunSettings.hasLaser)
+        {
+            miraLaser.SetActive(true);
+        }
+        else
+        {
+            miraLaser.SetActive(false);
+        }
     }
 
     private void OnEnable()
@@ -75,7 +100,7 @@ public class ShootController : MonoBehaviour
             hasFired = true;
         }
 
-        if (triggerValue < 0.2f)
+        if (triggerValue < 0.1f)
         {
             hasFired = false;
         }
@@ -102,46 +127,71 @@ public class ShootController : MonoBehaviour
 
     public void Disparar()
     {
+        recarga = false;
         if (bullets > 0)
         {
+            sfxSource.PlayOneShot(shootSound);
             bullets--;
             Debug.Log("Has disparado");
+            sinBalas = false;
+            GameObject bullet = ObjectPool.instance.GetPooledObject();
+
+            if (bullet != null)
+            {
+                bullet.transform.position = transformFirePoint.position;
+                bullet.transform.rotation = transformFirePoint.rotation * Quaternion.Euler(90f, 0f, 0f);
+                bullet.SetActive(true);
+
+                Rigidbody rb = bullet.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.linearVelocity = transformFirePoint.forward * bulletSpeed;
+                }
+            }
         }
         else
         {
             Debug.Log("No tienes balas");
+            sinBalas = true;
         }
         if (!enMovimiento && tambor != null)
         {
-            StartCoroutine(MoverTambor());
+            StartCoroutine(MoverTambor(sinBalas, recarga));
         }
     }
 
-    private IEnumerator MoverTambor()
+    private IEnumerator MoverTambor(bool sinBalas, bool recarga)
     {
         enMovimiento = true;
 
         Vector3 destino = posicionInicialLocal + Vector3.right * distancia;
-
-        while (Vector3.Distance(tambor.localPosition, destino) > 0.01f)
+        if (!recarga)
         {
-            tambor.localPosition = Vector3.MoveTowards(
-                tambor.localPosition,
-                destino,
-                velocidad * Time.deltaTime
-            );
-            yield return null;
+            while (Vector3.Distance(tambor.localPosition, destino) > 0.01f)
+            {
+                tambor.localPosition = Vector3.MoveTowards(
+                    tambor.localPosition,
+                    destino,
+                    velocidad * Time.deltaTime
+                );
+                yield return null;
+            }
         }
-
-        while (Vector3.Distance(tambor.localPosition, posicionInicialLocal) > 0.01f)
+        
+        if (!sinBalas || recarga)
         {
-            tambor.localPosition = Vector3.MoveTowards(
-                tambor.localPosition,
-                posicionInicialLocal,
-                velocidad * Time.deltaTime
-            );
-            yield return null;
+            while (Vector3.Distance(tambor.localPosition, posicionInicialLocal) > 0.01f)
+            {
+                tambor.localPosition = Vector3.MoveTowards(
+                    tambor.localPosition,
+                    posicionInicialLocal,
+                    velocidad * Time.deltaTime
+                );
+            }
         }
+        yield return null;
 
         enMovimiento = false;
     }
@@ -182,6 +232,17 @@ public class ShootController : MonoBehaviour
         cargadorReal.SetActive(true);
         haRecargado = true;
         bullets = maxBullets;
+        if (sinBalas)
+        {
+            recarga = true;
+            sinBalas = false;
+            StartCoroutine(MoverTambor(sinBalas, recarga));
+        }
+    }
+    public void RecargarSinCargador()
+    {
+        bullets = maxBullets;
+        StartCoroutine(MoverTambor(sinBalas, recarga));
     }
 
 }

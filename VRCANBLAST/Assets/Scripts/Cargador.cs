@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class Cargador : MonoBehaviour
 {
-    public ShootController controller;
+    private ShootController controller;
     public GameObject Padre;
-
+    private void Start()
+    {
+        controller = GameObject.FindWithTag("GunController").GetComponent<ShootController>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Recarga"))
