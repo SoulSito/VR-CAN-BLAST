@@ -60,41 +60,6 @@ public class CanStackSpawner : MonoBehaviour
         }
     }
 
-    /*void SpawnStack(int count, Vector3 origin)
-    {
-        BoxCollider col = canPrefab.GetComponent<BoxCollider>();
-        Vector3 size = Vector3.Scale(col.size, canPrefab.transform.localScale);
-
-        float width = size.x;
-        float height = size.y;
-
-        float spacingMultiplier = 1.05f;
-        width *= spacingMultiplier;
-        height *= spacingMultiplier;
-
-        int rows = CalculateRows(count);
-        int currentCan = 0;
-
-        for (int row = 0; row < rows; row++)
-        {
-            int cansInRow = rows - row;
-
-            for (int i = 0; i < cansInRow; i++)
-            {
-                if (currentCan >= count)
-                    return;
-
-                float xOffset = i * width - (cansInRow - 1) * width / 2;
-                float yOffset = row * height;
-
-                Vector3 position = origin + new Vector3(xOffset, yOffset, 0);
-
-                Instantiate(canPrefab, position, Quaternion.identity, transform);
-                currentCan++;
-            }
-        }
-    }*/
-
     int CalculateRows(int canCount)
     {
         int rows = 0;
