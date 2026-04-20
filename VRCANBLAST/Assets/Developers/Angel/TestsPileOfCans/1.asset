@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   stacks:
-  - cansAmount: 1
-  - cansAmount: 2
-  - cansAmount: 1
+  - rows: 2
+  - rows: 2
+  - rows: 0

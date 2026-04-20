@@ -23,6 +23,7 @@ public class ShootController : MonoBehaviour
     public Transform puntoRecarga;
     public GameObject cargadorReal;
     public GameObject cargadorSimulado;
+    [SerializeField] BeltManager beltManager;
 
     [Header("Configuracion")]
     [SerializeField] private GameObject miraLaser;
@@ -238,6 +239,8 @@ public class ShootController : MonoBehaviour
             sinBalas = false;
             StartCoroutine(MoverTambor(sinBalas, recarga));
         }
+        GameMode.Instance.PlaceNextPile();
+        beltManager.InstanciarCargador();
     }
     public void RecargarSinCargador()
     {

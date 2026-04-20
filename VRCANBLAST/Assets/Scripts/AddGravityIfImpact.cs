@@ -9,6 +9,7 @@ public class AddGravityIfImpact : MonoBehaviour {
         // Si existe colisión se añade gravedad
         if (collision != null) {
             GetComponent<Rigidbody>().useGravity = true;
+            gameObject.transform.SetParent(null);
         }
     }
 
