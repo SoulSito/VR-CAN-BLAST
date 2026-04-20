@@ -37242,7 +37242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64cea1070f5d00499e90ce18a0ac89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPrefab: {fileID: 8293758712336058234, guid: 49ffb80d4774fcd4a99dc64db82c7f69, type: 3}
+  canPrefab: {fileID: 8293758712336058234, guid: fc7354d0a6a540648ab5a781239c4c03, type: 3}
   maxInactiveCans: 20
   spaceBetweenStacks: 1
 --- !u!4 &1844882838

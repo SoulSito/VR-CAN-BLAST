@@ -27,36 +27,50 @@ public class PileOfCans : MonoBehaviour
     {
         CapsuleCollider collider = canPrefab.GetComponent<CapsuleCollider>();
 
-        canWidth = collider.radius * 2f;
-        canHeight = collider.height;
+        canWidth = collider.radius * 2f * canPrefab.transform.localScale.x;
+        canHeight = collider.height * canPrefab.transform.localScale.y;
 
-        horizontalSpace = canWidth * .5f;
+        horizontalSpace = canWidth * .25f;
         verticalSpace = canHeight * .2f;
     }
 
     public void PlaceLevel(LevelData levelData)
     {
+        levelStacksPositions.Clear();
+
         foreach (CanStackData data in levelData.stacks)
         {
             int numberOfCans = 1;
             for (int row = data.rows - 1; row >= 0; row--)
             {
+                float evenRowOffset = (horizontalSpace * numberOfCans) + (row % 2 == 0 ? horizontalSpace : 0);
                 for (int column = 0; column < numberOfCans; column++)
                 {
-                    GameObject can = Instantiate(canPrefab,
-                        new Vector3(
+                    levelStacksPositions.Add(new Vector3(
                             0,
                             row * canHeight,
-                            column * canWidth + horizontalSpace
-                        ) + transform.position,
-                        Quaternion.identity
-                    );
-
-                    cansInPile.Add(can);
+                            column * (canWidth + horizontalSpace) + -evenRowOffset
+                        ) + transform.position);
                 }
 
                 numberOfCans++;
             }
+        }
+
+        levelStacksPositions.Reverse();
+
+        StartCoroutine("SpawnPile");
+    }
+
+    IEnumerator SpawnPile()
+    {
+        foreach(Vector3 position in levelStacksPositions)
+        {
+            GameObject can = Instantiate(canPrefab, position,Quaternion.identity);
+
+            cansInPile.Add(can);
+
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
