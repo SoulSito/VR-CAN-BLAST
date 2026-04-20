@@ -15,7 +15,7 @@ public class EndLevelResult
     public int untouchedCans;
     public int knockedCansInTable;
 
-    public EndLevelResult(int untouchedCans, int knockedCansInTable)
+    public EndLevelResult(int untouchedCans = 0, int knockedCansInTable = 0)
     {
         this.untouchedCans = untouchedCans;
         this.knockedCansInTable = knockedCansInTable;

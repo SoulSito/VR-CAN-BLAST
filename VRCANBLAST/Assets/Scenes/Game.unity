@@ -3227,7 +3227,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9d7440b06611c1a46aa08e024a408efb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.54520005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9d7440b06611c1a46aa08e024a408efb, type: 3}
       propertyPath: m_LocalScale.y
@@ -3235,7 +3235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9d7440b06611c1a46aa08e024a408efb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1.2106
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9d7440b06611c1a46aa08e024a408efb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27603,7 +27603,7 @@ GameObject:
   - component: {fileID: 1399152447}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -37242,7 +37242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64cea1070f5d00499e90ce18a0ac89f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPrefab: {fileID: 8293758712336058234, guid: fc7354d0a6a540648ab5a781239c4c03, type: 3}
+  canPrefab: {fileID: 8293758712336058234, guid: 49ffb80d4774fcd4a99dc64db82c7f69, type: 3}
   maxInactiveCans: 20
   spaceBetweenStacks: 1
 --- !u!4 &1844882838
@@ -42886,7 +42886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 11400000, guid: 81e91cb8100e60c48bc1cc48e58ce4c8, type: 2}
+  - {fileID: 11400000, guid: b37eff26872e9934fafe7046cd7bd015, type: 2}
   timePerGame: 60
   pileOfCans: {fileID: 1844882837}
   ufo: {fileID: 752476895}

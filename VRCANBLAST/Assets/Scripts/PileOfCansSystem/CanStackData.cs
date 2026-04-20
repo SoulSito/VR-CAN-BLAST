@@ -4,5 +4,5 @@ using UnityEngine;
 public class CanStackData
 {
     [Min(1)]
-    public int cansAmount;
+    public int rows;
 }

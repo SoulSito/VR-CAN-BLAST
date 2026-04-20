@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 232691583603387573}
   - component: {fileID: 4915150237531860351}
   m_Layer: 0
-  m_Name: Can
+  m_Name: Test_Can
   m_TagString: Can
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!114 &1161716696442634262
 MonoBehaviour:

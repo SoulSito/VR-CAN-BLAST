@@ -14,7 +14,7 @@ public class CanStackSpawner : MonoBehaviour
 
         foreach (var stack in level.stacks)
         {
-            SpawnStack(stack.cansAmount, new Vector3(offsetX, 0, 0) + transform.position);
+            //SpawnStack(stack.cansAmount, new Vector3(offsetX, 0, 0) + transform.position);
             offsetX += spacing; 
         }
     }

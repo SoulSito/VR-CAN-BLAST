@@ -1,6 +1,8 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 
 
@@ -14,164 +16,61 @@ public class PileOfCans : MonoBehaviour
     List<GameObject> inactiveCans = new();
     List<GameObject> cansInPile = new();
 
-    Vector3[][] levelStacksPositions;
+    List<Vector3> levelStacksPositions = new();
     float canWidth = 1f;
     float canHeight = 1f;
 
+    float horizontalSpace = 0.5f;
+    float verticalSpace = 0.2f;
+
     private void Start()
     {
-        BoxCollider collider = canPrefab.GetComponent<BoxCollider>();
+        CapsuleCollider collider = canPrefab.GetComponent<CapsuleCollider>();
 
-        canWidth = collider.size.x * 1.5f;
-        canHeight = collider.size.y * 1.5f;
+        canWidth = collider.radius * 2f;
+        canHeight = collider.height;
+
+        horizontalSpace = canWidth * .5f;
+        verticalSpace = canHeight * .2f;
     }
 
-    internal void PlaceLevel(LevelData level)
+    public void PlaceLevel(LevelData levelData)
     {
-        int numberOfStacks = level.stacks.Count;
-        int totalNumberOfRows = 0;
-
-        levelStacksPositions = new Vector3[numberOfStacks][];
-
-        for (int i = 0; i < numberOfStacks; i++)
+        foreach (CanStackData data in levelData.stacks)
         {
-            CanStackData canStackData = level.stacks[i];
-
-            int rowsInStack = CalculateRows(canStackData.cansAmount);
-            levelStacksPositions[i] = new Vector3[canStackData.cansAmount];
-
-            CalculateStackPositions(i, rowsInStack);
-
-            totalNumberOfRows += rowsInStack;
-        }
-
-        float startingXPosition = CalculateStartingXPosition(totalNumberOfRows);
-        float offsetX = startingXPosition;
-
-        for(int i = 0; i < levelStacksPositions.Length; i++)
-        {
-            PlaceStack(i, offsetX);
-
-            offsetX += canWidth * levelStacksPositions[i].Length;
-        }
-        
-    }
-
-    void CalculateStackPositions(int stackIndex, int rowsInStack)
-    {
-        int currentRowCans = rowsInStack;
-        int currentCan = 1;
-        int currentRow = 0;
-
-        float stackOffsetZ = -((rowsInStack / 2) * canWidth) + rowsInStack % 2 == 0 ? canWidth / 2 : 0;
-
-        for(int i = 0; i < levelStacksPositions[stackIndex].Length; i++)
-        {
-            levelStacksPositions[stackIndex][i] = new Vector3(
-                0,
-                canHeight * currentRow,
-                stackOffsetZ + canWidth * currentCan
-                );
-
-            currentCan++;
-
-            if(currentCan > currentRowCans)
+            int numberOfCans = 1;
+            for (int row = data.rows - 1; row >= 0; row--)
             {
-                currentCan = 1;
-                currentRowCans--;
-                currentRow++;
-
-                stackOffsetZ = -((currentRowCans / 2) * canWidth) + currentRowCans % 2 == 0 ? canWidth / 2 : 0;
-
-                if (currentRow > rowsInStack) return;
-            }
-        }
-
-
-
-
-        /*for(int i = 0; i < rowsInStack; i++)
-        {
-            for (int can = 0; can < cansInRow; can++)
-            {
-                levelStacksPositions[stackIndex][i + can] = new Vector3(
-                    stackOffsetX + canWidth * can,
-                    i * canHeight, 
-                    0
+                for (int column = 0; column < numberOfCans; column++)
+                {
+                    GameObject can = Instantiate(canPrefab,
+                        new Vector3(
+                            0,
+                            row * canHeight,
+                            column * canWidth + horizontalSpace
+                        ) + transform.position,
+                        Quaternion.identity
                     );
+
+                    cansInPile.Add(can);
+                }
+
+                numberOfCans++;
             }
-
-            cansInRow--;
-        }*/
-
-        StopAllCoroutines();
-        StartCoroutine(PlaceCanStack(stackIndex));
-    }
-
-    IEnumerator PlaceCanStack(int index)
-    {
-        foreach (Vector3 position in levelStacksPositions[index])
-        {
-            GameObject can = Instantiate(canPrefab, position + transform.position, Quaternion.identity);
-            cansInPile.Add(can);
-
-            yield return new WaitForSeconds(0.2f);
         }
-    }
-
-    float CalculateStartingXPosition(int totalNumberOfRows)
-    {
-        // TODO
-        return 0f;
-    }
-
-    void PlaceStack(int index, float offsetX)
-    {
-        // TODO
     }
 
     internal EndLevelResult EndLevel()
     {
-        // TODO: Comprobar latas derribadas sobre la mesa
+        GameObject[] cans = cansInPile.ToArray();
+        foreach (GameObject can in cans) Destroy(can);
 
-        ResetPile();
-
-        return new EndLevelResult(0, 0);
+        return new EndLevelResult();
     }
 
     internal void AddCanToInactiveList(GameObject can)
     {
-        if (inactiveCans.Contains(can)) return;
-
-        cansInPile.Remove(can);
-
-        if (inactiveCans.Count > maxInactiveCans) Destroy(can);
-        else inactiveCans.Add(can);
-    }
-
-    void ResetPile()
-    {
-        foreach (GameObject can in cansInPile)
-        {
-            can.GetComponent<Can>().Disable();
-
-            AddCanToInactiveList(can);
-        }
-
-        cansInPile.Clear();
-    }
-
-    int CalculateRows(int numberOfTotalCans)
-    {
-        int rows = 0;
-        int cansCounted = 0;
-
-        while(cansCounted < numberOfTotalCans)
-        {
-            rows++;
-            cansCounted += rows;
-        }
-
-        return rows;
+        //todo
     }
 }
+
