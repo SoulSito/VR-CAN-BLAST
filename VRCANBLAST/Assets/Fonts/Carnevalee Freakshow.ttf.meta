@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b8d6dab36c336c24293998d046a69078
+guid: 8b709bc538dac874b9fe96b6b95a322f
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Texas Tango BOLD PERSONAL USE
+  - Carnivalee Freakshow
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
