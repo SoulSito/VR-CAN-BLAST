@@ -36,7 +36,7 @@ public class GameMode : MonoBehaviour
     [SerializeField] ShootController pistol;
 
     [Header("UI")]
-    [SerializeField] ScoreUI scoreUI;
+    [SerializeField] ScoreUI scoreManager;
     [SerializeField] SettingsUI settingsUI;
 
 
@@ -73,14 +73,15 @@ public class GameMode : MonoBehaviour
         currentLevel++;
 
         gameState = GameState.Playing;
-        //scoreUI.StartTimer(timePerGame);
+        //scoreManager.StartTimer(timePerGame);
 
         // TODO: Se levanta el toldo?
     }
 
     internal void PlaceNextPile()
     {
-        if(currentLevel > levels.Count - 1)
+        Debug.Log("Current Level: " + currentLevel);
+        if(currentLevel >= levels.Count)
         {
             currentLevel = 0;
             levels.Shuffle();
@@ -102,7 +103,7 @@ public class GameMode : MonoBehaviour
 
     internal void OnCanTouchedFloor(GameObject can)
     {
-        scoreUI.IncreaseScore(100);
+        scoreManager.IncreaseScore(100);
 
         ufo.AddCanToPickUpList(can);
     }
@@ -124,7 +125,7 @@ public class GameMode : MonoBehaviour
             OnCanTouchedFloor(null);
         }
 
-        if (Input.GetKey(KeyCode.F3))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
             PlaceNextPile();
         }

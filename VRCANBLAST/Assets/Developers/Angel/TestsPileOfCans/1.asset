@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   stacks:
+  - rows: 4
   - rows: 2
-  - rows: 2
-  - rows: 0
+  - rows: 4
