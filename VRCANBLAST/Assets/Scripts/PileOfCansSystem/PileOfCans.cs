@@ -91,7 +91,9 @@ public class PileOfCans : MonoBehaviour
             if(cansInPileIndex < cansInPile.Count)
             {
                 can = cansInPile[cansInPileIndex];
-                can.transform.position = position;
+                can.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                can.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                can.transform.SetPositionAndRotation(position, transform.rotation);
                 can.GetComponent<Can>().Enable();
 
                 cansInPileIndex++;
