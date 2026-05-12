@@ -40,6 +40,9 @@ public class GameMode : MonoBehaviour
     [SerializeField] ScoreUI scoreManager;
     [SerializeField] SettingsUI settingsUI;
 
+    [Header("Scores")]
+    [SerializeField] int KnockedCansInTableScore = 100;
+    [SerializeField] int CansInFloorScore = 100;
 
     public GameState gameState {get; private set;}
 
@@ -92,6 +95,7 @@ public class GameMode : MonoBehaviour
         }
 
         EndLevelResult result = pileOfCans.EndLevel();
+        scoreManager?.IncreaseScore(result.knockedCansInTable * KnockedCansInTableScore);
         pileOfCans.PlaceLevel(levels[currentLevel]);
 
         currentLevel++;
@@ -117,7 +121,7 @@ public class GameMode : MonoBehaviour
     {
         if(gameState == GameState.Playing)
         {
-            scoreManager?.IncreaseScore(100);
+            scoreManager?.IncreaseScore(CansInFloorScore);
 
             pileOfCans.AddCanToInactiveList(can);
             ufo.AddCanToPickUpList(can);

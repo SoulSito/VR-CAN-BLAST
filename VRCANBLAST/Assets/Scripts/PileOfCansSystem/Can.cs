@@ -27,4 +27,9 @@ public class Can : MonoBehaviour
             }
         }
     }
+
+    internal bool IsKnockedOver()
+    {
+        return Vector3.Angle(transform.up, Vector3.up) > 45f;
+    }
 }

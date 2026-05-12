@@ -113,12 +113,22 @@ public class PileOfCans : MonoBehaviour
 
     internal EndLevelResult EndLevel()
     {
+        EndLevelResult result = new EndLevelResult();
+        GameObject[] cans = cansInPile.ToArray();
+
+        foreach (GameObject can in cans)
+        {
+            Can canScript = can.GetComponent<Can>();
+            canScript.Disable();
+            if (canScript.IsKnockedOver())
+            {
+                result.knockedCansInTable++;
+            }
+        }
+
         AddCansPickedUpToPile();
 
-        GameObject[] cans = cansInPile.ToArray();
-        foreach (GameObject can in cans) can.GetComponent<Can>().Disable();
-
-        return new EndLevelResult();
+        return result;
     }
 
     internal void AddCanToInactiveList(GameObject can)
