@@ -38,6 +38,7 @@ public class PileOfCans : MonoBehaviour
     {
         levelStacksPositions.Clear();
 
+
         
         float firstRowOffset = -GetFirstRowOffset(levelData.stacks);
         foreach (CanStackData data in levelData.stacks)
@@ -62,6 +63,7 @@ public class PileOfCans : MonoBehaviour
 
         levelStacksPositions.Reverse();
 
+        StopCoroutine("SpawnPile");
         StartCoroutine("SpawnPile");
     }
 
@@ -111,8 +113,6 @@ public class PileOfCans : MonoBehaviour
 
     internal EndLevelResult EndLevel()
     {
-        StopCoroutine("SpawnPile");
-
         EndLevelResult result = new EndLevelResult();
         GameObject[] cans = cansInPile.ToArray();
 

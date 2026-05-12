@@ -87,8 +87,6 @@ public class GameMode : MonoBehaviour
         if (gameState != GameState.Playing) return;
 
         gameState = GameState.Preparing;
-        EndLevelResult result = pileOfCans.EndLevel();
-        scoreManager?.IncreaseScore(result.knockedCansInTable * KnockedCansInTableScore);
 
         if(currentLevel >= levels.Count)
         {
@@ -96,10 +94,11 @@ public class GameMode : MonoBehaviour
             levels.Shuffle();
         }
 
+        EndLevelResult result = pileOfCans.EndLevel();
+        scoreManager?.IncreaseScore(result.knockedCansInTable * KnockedCansInTableScore);
         pileOfCans.PlaceLevel(levels[currentLevel]);
 
         currentLevel++;
-
         gameState = GameState.Playing;
     }
 
