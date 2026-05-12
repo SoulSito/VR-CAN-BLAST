@@ -19,9 +19,12 @@ public class Can : MonoBehaviour
     {
         if (other.CompareTag("PileOfCans"))
         {
-            hasLeftPileOfCan = true;
+            if (!hasLeftPileOfCan)
+            {
+                hasLeftPileOfCan = true;
 
-            GameMode.Instance.OnCanLeftTable(gameObject);
+                GameMode.Instance.OnCanLeftTable(gameObject);
+            }
         }
     }
 }
