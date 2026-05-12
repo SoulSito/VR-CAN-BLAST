@@ -9,6 +9,7 @@ TagManager:
   - GunController
   - Can
   - Floor
+  - PileOfCans
   layers:
   - Default
   - TransparentFX

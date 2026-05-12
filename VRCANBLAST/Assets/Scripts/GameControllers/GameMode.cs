@@ -113,12 +113,12 @@ public class GameMode : MonoBehaviour
         }
     }
 
-    internal void OnCanTouchedFloor(GameObject can)
+    internal void OnCanLeftTable(GameObject can)
     {
-        scoreManager?.IncreaseScore(100);
-
         if(gameState == GameState.Playing)
         {
+            scoreManager?.IncreaseScore(100);
+
             pileOfCans.AddCanToInactiveList(can);
             ufo.AddCanToPickUpList(can);
         }
@@ -138,7 +138,7 @@ public class GameMode : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            OnCanTouchedFloor(null);
+            OnCanLeftTable(null);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

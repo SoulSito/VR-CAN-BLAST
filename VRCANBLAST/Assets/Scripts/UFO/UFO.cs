@@ -54,9 +54,7 @@ public class UFO : MonoBehaviour
     {
         if (can == null) yield break;
 
-        Vector3 targetLocation = can.transform.position;
-
-        agent.SetDestination(targetLocation);
+        agent.SetDestination(can.transform.position);
 
         while (can != null &&
                agent.pathPending ||

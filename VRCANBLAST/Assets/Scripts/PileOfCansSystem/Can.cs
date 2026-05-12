@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Can : MonoBehaviour
 {
-    bool hasTouchedFloor = false;
+    bool hasLeftPileOfCan = false;
 
     internal void Disable()
     {
@@ -12,19 +12,16 @@ public class Can : MonoBehaviour
     internal void Enable()
     {
         gameObject.SetActive(true);
-        hasTouchedFloor = false;
+        hasLeftPileOfCan = false;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Floor"))
+        if (other.CompareTag("PileOfCans"))
         {
-            if (!hasTouchedFloor)
-            {
-                hasTouchedFloor = true;
+            hasLeftPileOfCan = true;
 
-                GameMode.Instance.OnCanTouchedFloor(gameObject);
-            }
+            GameMode.Instance.OnCanLeftTable(gameObject);
         }
     }
 }
