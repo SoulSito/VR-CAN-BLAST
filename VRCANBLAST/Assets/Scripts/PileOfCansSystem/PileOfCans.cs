@@ -15,6 +15,7 @@ public class PileOfCans : MonoBehaviour
     [SerializeField] float spaceBetweenStacks = 1f;
 
     List<GameObject> inactiveCans = new();
+    List<GameObject> cansPickedUp = new();
     List<GameObject> cansInPile = new();
 
     List<Vector3> levelStacksPositions = new();
@@ -112,6 +113,8 @@ public class PileOfCans : MonoBehaviour
 
     internal EndLevelResult EndLevel()
     {
+        AddCansPickedUpToPile();
+
         GameObject[] cans = cansInPile.ToArray();
         foreach (GameObject can in cans) can.GetComponent<Can>().Disable();
 
@@ -120,7 +123,31 @@ public class PileOfCans : MonoBehaviour
 
     internal void AddCanToInactiveList(GameObject can)
     {
-        //todo
+        inactiveCans.Add(can);
+        cansInPile.Remove(can);
+    }
+
+    internal void AddToCansPickedUp(GameObject can)
+    {
+        cansPickedUp.Add(can);
+        inactiveCans.Remove(can);
+    }
+
+    void AddCansPickedUpToPile()
+    {
+        foreach(GameObject can in cansPickedUp)
+        {
+            cansInPile.Add(can);
+        }
+
+        cansPickedUp.Clear();
+    }
+
+    internal void RemoveCanFromLists(GameObject can)
+    {
+        cansInPile.Remove(can);
+        cansPickedUp.Remove(can);
+        inactiveCans.Remove(can);
     }
 }
 

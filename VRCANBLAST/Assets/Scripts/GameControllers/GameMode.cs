@@ -7,6 +7,7 @@ public enum GameState {
     Setup,
     ReadyToPlay,
     Playing,
+    Preparing,
     Finished
 }
 
@@ -66,6 +67,8 @@ public class GameMode : MonoBehaviour
 
     internal void StartGame()
     {
+        if (gameState != GameState.ReadyToPlay) return;
+
         pistol?.Setup(settingsUI.GetGunSettings());
         pileOfCans.PlaceLevel(levels[currentLevel]);
         ufo.Activate();
@@ -73,14 +76,15 @@ public class GameMode : MonoBehaviour
         currentLevel++;
 
         gameState = GameState.Playing;
-        //scoreManager.StartTimer(timePerGame);
-
-        // TODO: Se levanta el toldo?
+        scoreManager?.StartTimer(timePerGame);
     }
 
     internal void PlaceNextPile()
     {
-        Debug.Log("Current Level: " + currentLevel);
+        if (gameState != GameState.Playing) return;
+
+        gameState = GameState.Preparing;
+
         if(currentLevel >= levels.Count)
         {
             currentLevel = 0;
@@ -91,21 +95,33 @@ public class GameMode : MonoBehaviour
         pileOfCans.PlaceLevel(levels[currentLevel]);
 
         currentLevel++;
+        gameState = GameState.Playing;
     }
 
     internal void OnCanWasPickedUp(GameObject can)
     {
-        Can canScript = can.GetComponent<Can>();
+        can.GetComponent<Can>().Disable();
 
-        canScript.Disable();
-        pileOfCans.AddCanToInactiveList(can);
+        if(gameState != GameState.Playing)
+        {
+            pileOfCans.RemoveCanFromLists(can);
+
+            Destroy(can);
+        } else
+        {
+            pileOfCans.AddToCansPickedUp(can);
+        }
     }
 
     internal void OnCanTouchedFloor(GameObject can)
     {
-        scoreManager.IncreaseScore(100);
+        scoreManager?.IncreaseScore(100);
 
-        ufo.AddCanToPickUpList(can);
+        if(gameState == GameState.Playing)
+        {
+            pileOfCans.AddCanToInactiveList(can);
+            ufo.AddCanToPickUpList(can);
+        }
     }
 
     internal void TimeEnded()
