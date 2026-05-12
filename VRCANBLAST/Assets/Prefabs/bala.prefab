@@ -64,9 +64,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: aa423655f6ca7ec49a840f4e985feaa5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aa423655f6ca7ec49a840f4e985feaa5, type: 3}
       propertyPath: m_Name
       value: bala
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aa423655f6ca7ec49a840f4e985feaa5, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9013638940889411661, guid: aa423655f6ca7ec49a840f4e985feaa5, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
