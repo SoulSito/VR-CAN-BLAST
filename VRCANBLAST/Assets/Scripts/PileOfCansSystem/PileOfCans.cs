@@ -100,11 +100,13 @@ public class PileOfCans : MonoBehaviour
             else
             {
                 can = Instantiate(canPrefab, position, Quaternion.identity);
-                cansPickedUp.Add(can);
+                cansAdded.Add(can);
             }
 
             yield return new WaitForSeconds(0.1f);
         }
+
+        cansInPile.AddRange(cansAdded);
     }
 
     internal EndLevelResult EndLevel()
