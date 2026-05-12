@@ -239,7 +239,12 @@ public class ShootController : MonoBehaviour
             sinBalas = false;
             StartCoroutine(MoverTambor(sinBalas, recarga));
         }
-        GameMode.Instance.PlaceNextPile();
+
+        if (GameMode.Instance.gameState == GameState.Playing)
+        {
+            GameMode.Instance.PlaceNextPile();
+        }
+
         beltManager.InstanciarCargador();
     }
     public void RecargarSinCargador()
