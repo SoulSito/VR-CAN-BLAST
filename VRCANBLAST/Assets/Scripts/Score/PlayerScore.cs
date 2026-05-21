@@ -37,7 +37,7 @@ public class PlayerScore
         }*/
 
         return "Puntuación: " + score +
-            "Balas por cargador: " + bullets + 
-            "Cantidad de latas: " + quantity.ToString();
+            "\nBalas por cargador: " + bullets + 
+            "\nCantidad de latas: " + quantity.ToString();
     }
 }
