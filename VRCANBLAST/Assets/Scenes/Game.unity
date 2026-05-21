@@ -42560,20 +42560,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 376230f1ec9839e4a86f5078ce2d7373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 11400000, guid: 93823d3b31512a14c8fb8a65cbee2134, type: 2}
-  - {fileID: 11400000, guid: cf2e3b8afde3c9a48ae253a33978f14d, type: 2}
-  - {fileID: 11400000, guid: c5cc0c14025adbe40b9ef1777f1189d7, type: 2}
-  - {fileID: 11400000, guid: b37eff26872e9934fafe7046cd7bd015, type: 2}
-  - {fileID: 11400000, guid: 8ca0e6ba839b3c54ab1a417488de0626, type: 2}
-  - {fileID: 11400000, guid: 5acf1606fb9b2c04e88478ad9e50339e, type: 2}
-  - {fileID: 11400000, guid: 81e91cb8100e60c48bc1cc48e58ce4c8, type: 2}
+  LowQuantity:
+  - {fileID: 11400000, guid: e74d3b07e0a43e442b596527218fab6f, type: 2}
+  - {fileID: 11400000, guid: ced666da886fb8d4e8ef3e55c4daa7bc, type: 2}
+  - {fileID: 11400000, guid: 0480fc9d7e6edad43a9e144d6bef7a6f, type: 2}
+  - {fileID: 11400000, guid: 726b934f78be86d4ebd3129e6dd572f4, type: 2}
+  - {fileID: 11400000, guid: 4f8c9ca54aac2a643b36b3aeb968f2ab, type: 2}
+  MediumQuantity:
+  - {fileID: 11400000, guid: 75b32af96d1449c42b60743c09259fd2, type: 2}
+  - {fileID: 11400000, guid: f0f77fe25d24aaa4ca5ba3931dcfe3e0, type: 2}
+  - {fileID: 11400000, guid: 8d415a65ff12d8647bbc593e379f7aba, type: 2}
+  - {fileID: 11400000, guid: a51953e074c1d024399f3e52bd16ef98, type: 2}
+  - {fileID: 11400000, guid: 5963cb646ab63cf4090665660b1d09b9, type: 2}
+  HighQuantity:
+  - {fileID: 11400000, guid: 25b085f2db06a8640a42aedfa686efc7, type: 2}
+  - {fileID: 11400000, guid: 3b58b0e98b160b6409d192717502dc39, type: 2}
+  - {fileID: 11400000, guid: 96a20186924009a42bf903b220a67ed2, type: 2}
+  - {fileID: 11400000, guid: e784541e871435143bcd5046af25a204, type: 2}
+  - {fileID: 11400000, guid: 8bf77a767f406c448a35871f1bc12cfa, type: 2}
   timePerGame: 60
   pileOfCans: {fileID: 1844882837}
   ufo: {fileID: 752476895}
   pistol: {fileID: 0}
   scoreManager: {fileID: 826186115}
   settingsUI: {fileID: 0}
+  KnockedCansInTableScore: 100
+  CansInFloorScore: 100
 --- !u!1 &2106400566
 GameObject:
   m_ObjectHideFlags: 0
