@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState {
     Setup,
@@ -28,8 +29,12 @@ public class GameMode : MonoBehaviour
     public static GameMode Instance { get; private set; }
 
     [Header("Setup")]
-    [SerializeField] List<LevelData> levels;
+    [SerializeField] List<LevelData> LowQuantity;
+    [SerializeField] List<LevelData> MediumQuantity;
+    [SerializeField] List<LevelData> HighQuantity;
     [SerializeField] int timePerGame = 60;
+
+    List<LevelData> levels;
 
     [Header("References")]
     [SerializeField] PileOfCans pileOfCans;
@@ -44,20 +49,48 @@ public class GameMode : MonoBehaviour
     [SerializeField] int KnockedCansInTableScore = 100;
     [SerializeField] int CansInFloorScore = 100;
 
+    PlayerScore playerScore;
+
     public GameState gameState {get; private set;}
 
     int currentLevel = 0;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(this.gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         gameState = GameState.Setup;
     }
 
     private void Start()
     {
+        switch (GameSettingsManager.Instance.cantidadDeLatas)
+        {
+            case GameSettingsManager.CantidadDeLatas.Baja:
+                levels = LowQuantity;
+                break;
+            case GameSettingsManager.CantidadDeLatas.Media:
+                levels = MediumQuantity;
+                break;
+            case GameSettingsManager.CantidadDeLatas.Alta:
+                levels = HighQuantity;
+                break;
+            case GameSettingsManager.CantidadDeLatas.Aleatorio:
+                levels = new List<LevelData>();
+                levels.AddRange(LowQuantity);
+                levels.AddRange(MediumQuantity);
+                levels.AddRange(HighQuantity);
+                break;
+        }
+
         SetupGame();
     }
 
@@ -131,6 +164,21 @@ public class GameMode : MonoBehaviour
     internal void TimeEnded()
     {
         gameState = GameState.Finished;
+
+        playerScore = new PlayerScore(
+            scoreManager.getScore(),
+            GameSettingsManager.Instance.currentGunSettings.maxBullets,
+            GameSettingsManager.Instance.cantidadDeLatas
+            );
+
+        SceneManager.LoadScene("ScoreScene");
+    }
+
+    internal PlayerScore GetPlayerScore()
+    {
+        if (playerScore != null) return playerScore;
+
+        return new PlayerScore();
     }
 
     private void Update()
@@ -138,11 +186,6 @@ public class GameMode : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F1))
         {
             StartGame();
-        }
-
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            OnCanLeftTable(null);
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

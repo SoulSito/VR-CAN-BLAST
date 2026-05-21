@@ -40,4 +40,9 @@ public class ScoreUI : MonoBehaviour
 
         scoreText.text = score.ToString();
     }
+
+    internal int getScore()
+    {
+        return score;
+    }
 }
