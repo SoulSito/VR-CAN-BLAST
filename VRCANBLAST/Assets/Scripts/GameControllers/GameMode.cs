@@ -163,6 +163,8 @@ public class GameMode : MonoBehaviour
 
     internal void TimeEnded()
     {
+        Debug.Log("Time Ended");
+
         gameState = GameState.Finished;
 
         playerScore = new PlayerScore(

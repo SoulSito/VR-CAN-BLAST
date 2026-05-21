@@ -21,12 +21,15 @@ public class SetQuantityOfCans : MonoBehaviour
         {
             case 1:
                 valueText.text = "Baja";
+                GameSettingsManager.Instance.cantidadDeLatas = GameSettingsManager.CantidadDeLatas.Baja;
                 break;
             case 2:
                 valueText.text = "Normal";
+                GameSettingsManager.Instance.cantidadDeLatas = GameSettingsManager.CantidadDeLatas.Media;
                 break;
             case 3:
                 valueText.text = "Alta";
+                GameSettingsManager.Instance.cantidadDeLatas = GameSettingsManager.CantidadDeLatas.Alta;
                 break;
             default:
                 valueText.text = "Normal";

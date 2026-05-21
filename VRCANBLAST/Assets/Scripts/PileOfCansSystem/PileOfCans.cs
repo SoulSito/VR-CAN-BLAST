@@ -105,7 +105,8 @@ public class PileOfCans : MonoBehaviour
                 cansAdded.Add(can);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
+           // yield return new WaitForSeconds(0.1f);
         }
 
         cansInPile.AddRange(cansAdded);

@@ -27,7 +27,8 @@ public class GunUIController : MonoBehaviour
     public void ApplySettings()
     {
         if (GameSettingsManager.Instance == null) return;
-
+        Debug.Log(bulletsSlider.value);
+        Debug.Log(laserToggle.isOn);
         GameSettingsManager.Instance.currentGunSettings = new GunSettings( (int)bulletsSlider.value, laserToggle.isOn);
     }
 
