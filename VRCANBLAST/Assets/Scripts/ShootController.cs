@@ -58,7 +58,14 @@ public class ShootController : MonoBehaviour
         {
             botonPosInicial = boton.localPosition;
         }
-        Setup(new GunSettings());
+        if (GameSettingsManager.Instance != null)
+        {
+            Setup(GameSettingsManager.Instance.currentGunSettings);
+        }
+        else
+        {
+            Setup(new GunSettings());
+        }
         bullets = maxBullets;
     }
     public void Setup(GunSettings gunSettings)

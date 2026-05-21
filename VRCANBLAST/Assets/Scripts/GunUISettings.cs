@@ -6,13 +6,12 @@ public class GunUIController : MonoBehaviour
     public Slider bulletsSlider;
     public Toggle laserToggle;
 
-    [SerializeField] private ShootController shootController;
-
     private void Start()
     {
         bulletsSlider.onValueChanged.AddListener(OnBulletsChanged);
-
         laserToggle.onValueChanged.AddListener(OnLaserChanged);
+
+        ApplySettings();
     }
 
     void OnBulletsChanged(float value)
@@ -27,13 +26,9 @@ public class GunUIController : MonoBehaviour
 
     public void ApplySettings()
     {
-        if (shootController == null) return;
+        if (GameSettingsManager.Instance == null) return;
 
-        GunSettings settings = new GunSettings(
-            (int)bulletsSlider.value,
-            laserToggle.isOn
-        );
-
-        shootController.Setup(settings);
+        GameSettingsManager.Instance.currentGunSettings = new GunSettings( (int)bulletsSlider.value, laserToggle.isOn);
     }
+
 }
